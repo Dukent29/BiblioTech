@@ -23,8 +23,8 @@ addBookForm.addEventListener('submit', (event) => {
             author,
             isbn,
             publication_year: publicationYear,
-            genre, // Include genre
-            description // Include description
+            genre, 
+            description 
         }),
     })
       .then((response) => response.json())

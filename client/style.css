@@ -1,10 +1,10 @@
-/* Style buttons with green background */.btn-green {
+.btn-green {
     background-color: #1b4d3e;
-    color: white; /* Set text color to white for contrast */
-    border: none; /* Remove default border */
+    color: white; 
+    border: none; 
 }
 
-/* Style links with green color */
+
 a {
     color: #1b4d3e;
 }

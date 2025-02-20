@@ -31,12 +31,11 @@ const connectWithRetry = () => {
     return db;
 }
 
-const db = connectWithRetry(); // Establish the database connection
+const db = connectWithRetry(); 
 
-// Middleware
 app.use(express.json());
 
-// Book API Routes
+
 app.post("/books", (req, res) => {
     const { title, author, isbn, publication_year, genre, description } = req.body;
 
@@ -51,7 +50,7 @@ app.post("/books", (req, res) => {
     });
 });
 
-// Get all books (GET /books)
+
 app.get("/books", (req, res) => {
   db.query("SELECT * FROM books", (err, results) => {
       if (err) {
@@ -63,7 +62,7 @@ app.get("/books", (req, res) => {
   });
 });
 
-// Update a book (PUT /books/:id)
+
 app.put("/books/:id", (req, res) => {
   const bookId = req.params.id;
   const { title, author, isbn, publication_year, genre, description } = req.body;
@@ -83,7 +82,7 @@ app.put("/books/:id", (req, res) => {
   });
 });
 
-// Get a specific book by ID (GET /books/:id)
+
 app.get("/books/:id", (req, res) => {
   const bookId = req.params.id;
   db.query("SELECT * FROM books WHERE id =?", [bookId], (err, results) => {
@@ -100,7 +99,7 @@ app.get("/books/:id", (req, res) => {
   });
 });
 
-// Delete a book (DELETE /books/:id)
+
 app.delete("/books/:id", (req, res) => {
   const bookId = req.params.id;
   db.query("DELETE FROM books WHERE id =?", [bookId], (err, results) => {
@@ -117,7 +116,7 @@ app.delete("/books/:id", (req, res) => {
   });
 });
 
-// Start the server
+
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
 });
