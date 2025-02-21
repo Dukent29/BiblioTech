@@ -6,7 +6,7 @@ function deleteBook(id) {
     .then(response => {
         if (response.ok) {
             console.log('Book deleted successfully');
-            getBooks(); // Refresh the book list
+            getBooks(); 
         } else {
             return response.json().then(errorData => {
                 throw new Error(errorData.message || 'Error deleting book');
@@ -19,7 +19,7 @@ function deleteBook(id) {
     });
 }
 
-// Function to fetch and display books
+
 function getBooks() {
     fetch('/api/books')
     .then(response => response.json())
@@ -29,9 +29,13 @@ function getBooks() {
         data.forEach(book => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <strong>${book.title}</strong> by ${book.author}
-                <button onclick="deleteBook(${book.id})">Delete</button>
-                <button onclick="editBook(${book.id})">Edit</button>
+                <strong>${book.title}</strong>
+                <div class="author">by ${book.author}</div>
+                <div class="description">${book.description}</div>
+                <div class="buttons">
+                    <button class="btn-edit" onclick="editBook(${book.id})">Edit</button>
+                    <button class="btn-delete" onclick="deleteBook(${book.id})">Delete</button>
+                </div>
             `;
             bookList.appendChild(li);
         });
@@ -42,7 +46,7 @@ function getBooks() {
     });
 }
 
-// Function to filter books based on search input and filter selection
+
 function filterBooks() {
     const searchInput = document.getElementById('search');
     const filterSelect = document.getElementById('filter');
@@ -53,7 +57,7 @@ function filterBooks() {
     const books = Array.from(bookList.children);
     books.forEach(book => {
         const title = book.querySelector('strong').textContent.toLowerCase();
-        const author = book.querySelector('span').textContent.toLowerCase();
+        const author = book.querySelector('.author').textContent.toLowerCase();
 
         if (title.includes(searchTerm) || author.includes(searchTerm)) {
             book.style.display = '';
@@ -96,12 +100,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const bookList = document.getElementById('book-list');
             const li = document.createElement('li');
             li.innerHTML = `
-                <strong>${data.title}</strong> by ${data.author}
-                <button onclick="deleteBook(${data.id})">Delete</button>
-                <button onclick="editBook(${data.id})">Edit</button>
+                <strong>${data.title}</strong>
+                <div class="author">by ${data.author}</div>
+                <div class="description">${data.description}</div>
+                <div class="buttons">
+                    <button class="btn-edit" onclick="editBook(${data.id})">Edit</button>
+                    <button class="btn-delete" onclick="deleteBook(${data.id})">Delete</button>
+                </div>
             `;
             bookList.appendChild(li);
-            getBooks(); // Refresh the book list
+            getBooks(); 
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -112,5 +120,17 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', filterBooks);
     filterSelect.addEventListener('change', filterBooks);
 
-    getBooks(); // Initial fetch of books
+    getBooks(); 
+
+    
+    const accordionButton = document.querySelector('.accordion-button');
+    const collapseOne = document.getElementById('collapseOne');
+
+    accordionButton.addEventListener('click', () => {
+        if (collapseOne.classList.contains('show')) {
+            collapseOne.classList.remove('show');
+        } else {
+            collapseOne.classList.add('show');
+        }
+    });
 });

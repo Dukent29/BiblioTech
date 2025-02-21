@@ -1,10 +1,136 @@
+body {
+    background-color: #0d1117;
+}
+
 .btn-green {
     background-color: #1b4d3e;
     color: white; 
     border: none; 
 }
 
-
 a {
     color: #1b4d3e;
+}
+h1 {
+    color: white;
+    text-align: center;
+}
+.container {
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align-last: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+.search-filter {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-filter .form-control,
+.search-filter .form-select {
+    background-color: #ffffff19;
+    color: white;
+    border: 1px solid #1b4d3e;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+}
+
+.search-filter .form-control::placeholder {
+    color: white;
+}
+
+form label {
+    color: #000;
+}
+
+#book-list {
+    margin: 0 auto;
+    max-width: 600px;
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0px!important;
+}
+
+#book-list li {
+    background-color: #1b4d3e;
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    list-style: none;
+    flex: 1 1 calc(50% - 1rem);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#book-list li strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+#book-list li .author {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#book-list li .description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+#book-list li .buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+#book-list li .buttons button {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+#book-list li .buttons .btn-edit {
+    background-color: white;
+    color: #1b4d3e;
+    border: 1px solid #1b4d3e;
+}
+
+#book-list li .buttons .btn-delete {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.accordion {
+    cursor: pointer;
+    padding: 1rem;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.2rem;
+    background-color: #ffffff19;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    border: solid 1px #1b4d3e;
+}
+
+.accordion.active, .accordion:hover {
+    background-color: #145a4a;
+}
+
+.panel {
+    padding: 0 1rem;
+    display: none;
+    overflow: hidden;
+    background-color: #ffffff19;
+    border-radius: 10px;
 }
