@@ -27,6 +27,8 @@ services:
     build: ./server
     expose:
       - "3000" #API EXPOSE UNIQUEMENT SUR LE RESEAU PRIVE
+    ports:
+      - "3000:3000"
     depends_on:
       - db
     networks:

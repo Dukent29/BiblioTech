@@ -1,8 +1,12 @@
 const express = require("express");
 const mysql = require("mysql2");
+const cors = require("cors");
 
 const app = express();
 const port = 3000; // Use environment variable or default
+
+app.use(cors());
+app.use(express.json());
 
 // Function to connect to the database with retry logic
 const connectWithRetry = () => {
@@ -31,16 +35,15 @@ const connectWithRetry = () => {
     return db;
 }
 
-const db = connectWithRetry(); 
+const db = connectWithRetry();
 
 app.use(express.json());
 
-
 app.post("/books", (req, res) => {
-    const { title, author, isbn, publication_year, genre, description } = req.body;
+    const { title, author, publicationYear, genre, description } = req.body;
 
-    const query = 'INSERT INTO books (title, author, isbn, publication_year, genre, description) VALUES (?,?,?,?,?,?)';
-    db.query(query, [title, author, isbn, publication_year, genre, description], (err, results) => {
+    const query = 'INSERT INTO books (title, author, publication_year, genre, description) VALUES (?,?,?,?,?)';
+    db.query(query, [title, author, publicationYear, genre, description], (err, results) => {
         if (err) {
             console.error("Error adding book:", err);
             res.status(500).json({ error: "Failed to add book" });
@@ -50,72 +53,67 @@ app.post("/books", (req, res) => {
     });
 });
 
-
 app.get("/books", (req, res) => {
-  db.query("SELECT * FROM books", (err, results) => {
-      if (err) {
-          console.error("Error retrieving books:", err);
-          res.status(500).json({ error: "Failed to retrieve books" });
-          return;
-      }
-      res.json(results);
-  });
+    db.query("SELECT * FROM books", (err, results) => {
+        if (err) {
+            console.error("Error retrieving books:", err);
+            res.status(500).json({ error: "Failed to retrieve books" });
+            return;
+        }
+        res.json(results);
+    });
 });
-
 
 app.put("/books/:id", (req, res) => {
-  const bookId = req.params.id;
-  const { title, author, isbn, publication_year, genre, description } = req.body;
+    const bookId = req.params.id;
+    const { title, author, publicationYear, genre, description } = req.body;
 
-  const query = "UPDATE books SET title =?, author =?, isbn =?, publication_year =?, genre =?, description =? WHERE id =?";
-  db.query(query, [title, author, isbn, publication_year, genre, description, bookId], (err, results) => {
-      if (err) {
-          console.error("Error updating book:", err);
-          res.status(500).json({ error: "Failed to update book" });
-          return;
-      }
-      if (results.affectedRows === 0) {
-          res.status(404).json({ error: "Book not found" });
-          return;
-      }
-      res.json({ message: "Book updated successfully" });
-  });
+    const query = "UPDATE books SET title =?, author =?, publication_year =?, genre =?, description =? WHERE id =?";
+    db.query(query, [title, author, publicationYear, genre, description, bookId], (err, results) => {
+        if (err) {
+            console.error("Error updating book:", err);
+            res.status(500).json({ error: "Failed to update book" });
+            return;
+        }
+        if (results.affectedRows === 0) {
+            res.status(404).json({ error: "Book not found" });
+            return;
+        }
+        res.json({ message: "Book updated successfully" });
+    });
 });
-
 
 app.get("/books/:id", (req, res) => {
-  const bookId = req.params.id;
-  db.query("SELECT * FROM books WHERE id =?", [bookId], (err, results) => {
-      if (err) {
-          console.error("Error retrieving book:", err);
-          res.status(500).json({ error: "Failed to retrieve book" });
-          return;
-      }
-      if (results.length === 0) {
-          res.status(404).json({ error: "Book not found" });
-          return;
-      }
-      res.json(results);
-  });
+    const bookId = req.params.id;
+    db.query("SELECT * FROM books WHERE id =?", [bookId], (err, results) => {
+        if (err) {
+            console.error("Error retrieving book:", err);
+            res.status(500).json({ error: "Failed to retrieve book" });
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).json({ error: "Book not found" });
+            return;
+        }
+        res.json(results[0]);
+    });
 });
-
 
 app.delete("/books/:id", (req, res) => {
-  const bookId = req.params.id;
-  db.query("DELETE FROM books WHERE id =?", [bookId], (err, results) => {
-      if (err) {
-          console.error("Error deleting book:", err);
-          res.status(500).json({ error: "Failed to delete book" });
-          return;
-      }
-      if (results.affectedRows === 0) {
-          res.status(404).json({ error: "Book not found" });
-          return;
-      }
-      res.json({ message: "Book deleted successfully" });
-  });
+    const bookId = req.params.id;
+    db.query("DELETE FROM books WHERE id =?", [bookId], (err, results) => {
+        if (err) {
+            console.error("Error deleting book:", err);
+            res.status(500).json({ error: "Failed to delete book" });
+            return;
+        }
+        if (results.affectedRows === 0) {
+            res.status(404).json({ error: "Book not found" });
+            return;
+        }
+        res.json({ message: "Book deleted successfully" });
+    });
 });
-
 
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);

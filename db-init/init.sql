@@ -1,5 +1,4 @@
-CREATE DATABASE IF NOT EXISTS bibliotech_db;  
-USE bibliotech_db;  
+SET NAMES 'utf8mb4';
 
 CREATE TABLE IF NOT EXISTS books (
     id INT AUTO_INCREMENT PRIMARY KEY,  
@@ -13,6 +12,10 @@ CREATE TABLE IF NOT EXISTS books (
 );
 
 
-ALTER TABLE books ADD INDEX (title);
-ALTER TABLE books ADD INDEX (author);
-ALTER TABLE books ADD INDEX (isbn);
+INSERT INTO books (title, author, publication_year, genre, description) VALUES
+('The Great Gatsby', 'F. Scott Fitzgerald', 1925, 'Novel', 'A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.'),
+('To Kill a Mockingbird', 'Harper Lee', 1960, 'Fiction', 'A novel about the serious issues of rape and racial inequality, narrated by the young Scout Finch.'),
+('1984', 'George Orwell', 1949, 'Dystopian', 'A novel that presents a dystopian future under a totalitarian regime.'),
+('Pride and Prejudice', 'Jane Austen', 1813, 'Romance', 'A romantic novel that also critiques the British landed gentry at the end of the 18th century.'),
+('Moby-Dick', 'Herman Melville', 1851, 'Adventure', 'A novel about the voyage of the whaling ship Pequod and its captain, Ahab, who is obsessed with revenge on Moby Dick, a white whale.')
+;
